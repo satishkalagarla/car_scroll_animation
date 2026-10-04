@@ -1,0 +1,248 @@
+<!DOCTYPE html>
+<html lang="en">
+<head>
+    <meta charset="UTF-8">
+    <meta name="viewport" content="width=device-width, initial-scale=1.0">
+    <title>ITZFIZZ — Scroll-Driven Hero Section Animation</title>
+    <meta name="description" content="A premium scroll-driven automotive hero animation showcasing GSAP ScrollTrigger, micro-interactions, and real-time statistics reveal.">
+    
+    <!-- Google Fonts -->
+    <link rel="preconnect" href="https://fonts.googleapis.com">
+    <link rel="preconnect" href="https://fonts.gstatic.com" crossorigin>
+    <link href="https://fonts.googleapis.com/css2?family=Outfit:wght@300;400;500;600;700;800;900&family=Space+Grotesk:wght@400;500;600;700&display=swap" rel="stylesheet">
+    
+    <!-- CSS Stylesheet -->
+    <link rel="stylesheet" href="style.css">
+    
+    <!-- GSAP & Plugins CDN -->
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/gsap.min.js"></script>
+    <script src="https://cdnjs.cloudflare.com/ajax/libs/gsap/3.12.5/ScrollTrigger.min.js"></script>
+    <!-- Lenis Smooth Scroll -->
+    <script src="https://unpkg.com/lenis@1.1.9/dist/lenis.min.js"></script>
+</head>
+<body>
+
+    <!-- Ambient Background Lighting -->
+    <div class="ambient-light top-left"></div>
+    <div class="ambient-light bottom-right"></div>
+    <div class="grid-overlay"></div>
+
+    <!-- Navigation Header -->
+    <header class="navbar navbar-hidden">
+        <div class="logo">
+            <span class="logo-badge">⚡</span>
+            <span class="logo-text">ITZ<span class="highlight">FIZZ</span></span>
+        </div>
+        <nav class="nav-links">
+            <a href="#hero" class="active">Overview</a>
+            <a href="#features">Features</a>
+            <a href="#metrics">Metrics</a>
+        </nav>
+        <div class="nav-actions">
+            <button id="soundToggle" class="btn-icon" title="Toggle Engine SFX">
+                <svg class="icon-sound-off" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><path d="M11 5L6 9H2v6h4l5 4V5z"></path><line x1="23" y1="9" x2="17" y2="15"></line><line x1="17" y1="9" x2="23" y2="15"></line></svg>
+                <svg class="icon-sound-on hidden" viewBox="0 0 24 24" width="18" height="18" stroke="currentColor" stroke-width="2" fill="none"><polygon points="11 5 6 9 2 9 2 15 6 15 11 19 11 5"></polygon><path d="M19.07 4.93a10 10 0 0 1 0 14.14M15.54 8.46a5 5 0 0 1 0 7.07"></path></svg>
+                <span>SFX</span>
+            </button>
+            <button id="replayIntro" class="btn-secondary">
+                <svg viewBox="0 0 24 24" width="16" height="16" stroke="currentColor" stroke-width="2" fill="none"><path d="M23 4v6h-6"></path><path d="M20.49 15a9 9 0 1 1-2.12-9.36L23 10"></path></svg>
+                Replay Intro
+            </button>
+        </div>
+    </header>
+
+    <!-- Main Content Container -->
+    <main>
+        <!-- 1. Hero Intro Section (Above The Fold) -->
+        <section id="hero" class="hero-intro">
+            <div class="hero-badge hero-anim">
+                <span class="pulse-dot"></span> SCROLL-DRIVEN MOTION EXPERIENCE
+            </div>
+
+            <!-- Letter-spaced Headline -->
+            <h1 class="headline hero-anim" id="mainHeadline">
+                <span class="char-group">W E L C O M E</span>
+                <span class="char-group accent">I T Z F I Z Z</span>
+            </h1>
+
+            <p class="subtitle hero-anim">
+                Next-generation scroll-driven animation powered by GSAP. Scroll down to initiate hyper-precise telemetry & telemetry statistics.
+            </p>
+
+            <!-- Initial Metrics Cards (Hero Above Fold) -->
+            <div class="initial-stats hero-anim">
+                <div class="stat-card intro-card">
+                    <div class="stat-number" data-target="58" data-suffix="%">0%</div>
+                    <div class="stat-label">Increase in pick up point use</div>
+                    <div class="stat-bar"><div class="bar-fill" style="--fill-width: 58%"></div></div>
+                </div>
+                <div class="stat-card intro-card">
+                    <div class="stat-number" data-target="27" data-suffix="%">0%</div>
+                    <div class="stat-label">Efficiency expansion rate</div>
+                    <div class="stat-bar"><div class="bar-fill" style="--fill-width: 27%"></div></div>
+                </div>
+                <div class="stat-card intro-card">
+                    <div class="stat-number" data-target="23" data-suffix="%">0%</div>
+                    <div class="stat-label">Decreased customer phone calls</div>
+                    <div class="stat-bar"><div class="bar-fill" style="--fill-width: 23%"></div></div>
+                </div>
+            </div>
+
+            <!-- Scroll Indicator -->
+            <div class="scroll-prompt hero-anim">
+                <div class="mouse-icon">
+                    <div class="wheel"></div>
+                </div>
+                <span>SCROLL TO DRIVE</span>
+                <div class="arrow-down">↓</div>
+            </div>
+        </section>
+
+        <!-- 2. Core Feature: Pinned Scroll-Driven Track Section -->
+        <section id="scrollTrackSection" class="scroll-track-section">
+            <div class="sticky-viewport">
+
+                <!-- Overlay Info Header during scroll -->
+                <div class="track-header">
+                    <div class="speedometer">
+                        <span class="speed-label">VELOCITY</span>
+                        <span id="speedValue" class="speed-value">000</span> <small>KM/H</small>
+                    </div>
+                    <div class="progress-indicator">
+                        <span class="progress-label">TRACK PROGRESS</span>
+                        <div class="progress-track"><div id="progressBar" class="progress-fill"></div></div>
+                        <span id="progressPercent" class="progress-val">0%</span>
+                    </div>
+                </div>
+
+                <!-- Floating Statistics Cards (Revealed as car moves) -->
+                <div class="floating-cards-container">
+                    <!-- Top Lane Cards -->
+                    <div class="floating-card card-top card-1" id="floatCard1">
+                        <div class="card-badge bg-lime">KEY METRIC</div>
+                        <div class="card-big-stat" data-count="58" data-suffix="%">58%</div>
+                        <div class="card-desc">Increase in pick up point use across active urban hubs</div>
+                    </div>
+
+                    <div class="floating-card card-top card-2" id="floatCard2">
+                        <div class="card-badge bg-dark">ADOPTION</div>
+                        <div class="card-big-stat" data-count="27" data-suffix="%">27%</div>
+                        <div class="card-desc">Increase in pick up point use & fleet efficiency</div>
+                    </div>
+
+                    <!-- Bottom Lane Card -->
+                    <div class="floating-card card-bottom card-3" id="floatCard3">
+                        <div class="card-badge bg-cyan">SUPPORT REDUCTION</div>
+                        <div class="card-big-stat" data-count="23" data-suffix="%">23%</div>
+                        <div class="card-desc">Decreased in customer phone calls with real-time tracking</div>
+                    </div>
+
+                    <!-- Final Completion Badge Card -->
+                    <div class="floating-card card-top card-4" id="floatCard4">
+                        <div class="card-badge bg-gold">PERFORMANCE</div>
+                        <div class="card-big-stat" data-count="99.9" data-suffix="%">99.9%</div>
+                        <div class="card-desc">Telemetry accuracy and smooth motion execution</div>
+                    </div>
+                </div>
+
+                <!-- Road Track Canvas / Layout -->
+                <div class="road-container">
+                    <div class="road-asphalt">
+                        
+                        <!-- Center dashed line -->
+                        <div class="road-line"></div>
+
+                        <!-- Trail that expands behind the car -->
+                        <div class="road-trail" id="roadTrail">
+                            <!-- Unmasked Reveal Text inside trail -->
+                            <div class="trail-text" id="trailText">
+                                W E L C O M E &nbsp; I T Z F I Z Z
+                            </div>
+                        </div>
+
+                        <!-- Static Background Text (Dull / Unrevealed state) -->
+                        <div class="road-text-background">
+                            W E L C O M E &nbsp; I T Z F I Z Z
+                        </div>
+
+                        <!-- Car Visual Element -->
+                        <div class="car-wrapper" id="carWrapper">
+                            <div class="car-glow"></div>
+                            <!-- Headlight Beams -->
+                            <div class="headlight-beam"></div>
+                            <!-- Car Image / SVG -->
+                            <img src="car.png" alt="Supercar Top View" class="car-image" id="carImage" onerror="this.style.display='none'; document.getElementById('svgCar').style.display='block';">
+                            
+                            <!-- Inline SVG Car Fallback if PNG fails -->
+                            <svg id="svgCar" class="car-svg-fallback" viewBox="0 0 300 120" style="display:none;">
+                                <g transform="rotate(0, 150, 60)">
+                                    <!-- Car Body Chassis -->
+                                    <path d="M 20 60 C 20 35, 45 20, 80 18 L 220 18 C 265 20, 285 40, 285 60 C 285 80, 265 100, 220 102 L 80 102 C 45 100, 20 85, 20 60 Z" fill="#ff5e00" stroke="#ff8c00" stroke-width="2"/>
+                                    <!-- Carbon Fiber Roof & Windshield -->
+                                    <path d="M 90 32 L 180 32 C 210 32, 220 45, 220 60 C 220 75, 210 88, 180 88 L 90 88 C 75 88, 70 75, 70 60 C 70 45, 75 32, 90 32 Z" fill="#111" stroke="#333" stroke-width="2"/>
+                                    <path d="M 100 36 L 150 36 C 165 36, 175 46, 175 60 C 175 74, 165 84, 150 84 L 100 84 Z" fill="#1a2634" opacity="0.9"/>
+                                    <!-- Spoiler Wings -->
+                                    <rect x="25" y="15" width="12" height="90" rx="3" fill="#000" stroke="#333"/>
+                                    <!-- Front Lights -->
+                                    <ellipse cx="270" cy="30" rx="8" ry="4" fill="#00ffff" />
+                                    <ellipse cx="270" cy="90" rx="8" ry="4" fill="#00ffff" />
+                                </g>
+                            </svg>
+                        </div>
+                    </div>
+                </div>
+
+            </div>
+        </section>
+
+        <!-- 3. Technical Breakdown & Features Section -->
+        <section id="features" class="features-section">
+            <div class="section-container">
+                <div class="section-tag">ENGINEERING DETAILS</div>
+                <h2 class="section-title">Motion Quality & Execution</h2>
+                
+                <div class="features-grid">
+                    <div class="feature-card">
+                        <div class="feature-icon">🏎️</div>
+                        <h3>GPU-Accelerated Transforms</h3>
+                        <p>Motion is calculated via <code>translateX()</code> and <code>clip-path</code> CSS properties, eliminating browser layout reflows for smooth 60fps performance.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">🎯</div>
+                        <h3>Scroll Progress Interpolation</h3>
+                        <p>GSAP <code>ScrollTrigger</code> with <code>scrub: 1</code> smooths out jittery scroll wheels, creating natural fluid deceleration.</p>
+                    </div>
+
+                    <div class="feature-card">
+                        <div class="feature-icon">📊</div>
+                        <h3>Interactive Metric Telemetry</h3>
+                        <p>Statistics animate dynamically based on scroll distance triggers with animated counting numbers and color highlights.</p>
+                    </div>
+                </div>
+            </div>
+        </section>
+    </main>
+
+    <!-- Footer -->
+    <footer class="footer">
+        <div class="footer-content">
+            <div class="footer-brand">
+                <span class="logo-text">W E L C O M E &nbsp; I T Z F I Z Z</span>
+                <p>Scroll-Driven Hero Section Animation Assignment</p>
+            </div>
+            <div class="footer-actions">
+                <a href="#hero" class="btn-top">
+                    <span>Back to Top</span> ↑
+                </a>
+            </div>
+        </div>
+        <div class="footer-bottom">
+            <p>&copy; 2026 ITZFIZZ Automotive. Built with HTML, CSS, JavaScript & GSAP.</p>
+        </div>
+    </footer>
+
+    <!-- JavaScript Script -->
+    <script src="script.js"></script>
+</body>
+</html>
